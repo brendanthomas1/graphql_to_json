@@ -22,5 +22,6 @@ end
                   last_name: Faker::Name.last_name,
                   gender: Faker::Gender.short_binary_type,
                   seniority: Faker::Job.seniority,
-                  zoo_id: Zoo.first.id
+                  zoo_id: Zoo.first.id,
+                  job_id: Job.order('RANDOM()').first.id
 end

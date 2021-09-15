@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_15_193338) do
+ActiveRecord::Schema.define(version: 2021_09_15_210055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,8 @@ ActiveRecord::Schema.define(version: 2021_09_15_193338) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "zoo_id"
+    t.bigint "job_id"
+    t.index ["job_id"], name: "index_employees_on_job_id"
     t.index ["zoo_id"], name: "index_employees_on_zoo_id"
   end
 
@@ -58,5 +60,6 @@ ActiveRecord::Schema.define(version: 2021_09_15_193338) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "employees", "jobs"
   add_foreign_key "employees", "zoos"
 end
