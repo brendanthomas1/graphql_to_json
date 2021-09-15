@@ -1,0 +1,22 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: db
+  username: postgres
+  password: password
+  pool: 5
+
+development:
+  <<: *default
+  database: graphql_to_json_development
+
+
+test:
+  <<: *default
+  database: graphql_to_json_test
+
+production:
+  <<: *default
+  database: graphql_to_json_production
+  username: graphql_to_json
+  password: <%= ENV['GRAPHQL_TO_JSON_DATABASE_PASSWORD'] %>
