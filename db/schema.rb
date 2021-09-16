@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_15_210055) do
+ActiveRecord::Schema.define(version: 2021_09_16_130046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "addresses", force: :cascade do |t|
+    t.string "address_1"
+    t.string "city"
+    t.string "state"
+    t.string "zip_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "animal_types", force: :cascade do |t|
     t.string "name"
@@ -58,8 +67,11 @@ ActiveRecord::Schema.define(version: 2021_09_15_210055) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "address_id"
+    t.index ["address_id"], name: "index_zoos_on_address_id"
   end
 
   add_foreign_key "employees", "jobs"
   add_foreign_key "employees", "zoos"
+  add_foreign_key "zoos", "addresses"
 end

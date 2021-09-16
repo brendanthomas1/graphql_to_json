@@ -2,6 +2,7 @@ class ZooConverter
   extend Converter
 
   field :name, from: [:zoo, :name]
+  field :city, from: [:zoo, :address, :city]
 
   def to_json
     payload = {}
