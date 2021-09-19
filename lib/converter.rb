@@ -1,7 +1,12 @@
 module Converter
   def field(name, from:)
     fields << { name: name, from: from }
+    thing << from
     add_to_froms(from)
+  end
+
+  def thing
+    @thing ||= []
   end
 
   def fields
@@ -18,5 +23,19 @@ module Converter
     froms[key] ||= []
     froms[key] << array.first if array.one?
     froms[key] << { array.first => array.last } if array.length == 2
+  end
+
+  def array_to_nested_hash(array)
+    array.reverse.inject { |val, key| { key => [val] } }
+  end
+
+  def foo
+    thing.map { |f| array_to_nested_hash f }
+  end
+
+  def maybe
+    foo.inject({}) do |hash, field|
+      hash.merge(field) { |_key, old_value, new_value| old_value + new_value }
+    end
   end
 end

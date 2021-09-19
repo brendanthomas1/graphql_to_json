@@ -1,8 +1,10 @@
 class ZooConverter
   extend Converter
 
-  field :name, from: [:zoo, :name]
-  field :city, from: [:zoo, :address, :city]
+  field :name,   from: [:zoo, :name]
+  field :city,   from: [:zoo, :address, :city]
+  field :street, from: [:zoo, :address, :address1]
+  field :state,  from: [:zoo, :address, :state]
 
   def to_json
     payload = {}
@@ -13,6 +15,18 @@ class ZooConverter
   end
 
   def resolve_data
-    @resolve_data = Converter::DataResolver.data_for(:id, 1, self.class.froms).with_indifferent_access
+    @resolve_data ||=
+      Converter::DataResolver.data_for(:id, @zoo_id, self.class.maybe).with_indifferent_access
+  end
+
+  def initialize(zoo_id)
+    @zoo_id = zoo_id
   end
 end
+
+# name it ToscheStation! For power converters!
+#
+#
+# inherit from ToscheStation::PowerConverter
+#
+# which can extend the ClassMethods module
